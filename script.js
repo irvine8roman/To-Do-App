@@ -20,14 +20,16 @@ class UI {
   <td>${newTask.task}</td>
   <td>${newTask.notes}</td>
   <td>${newTask.date}</td>
-  <td><a href="#" class="edit"><i class="bi bi-pencil"></i></a></td>
-  <td><a href='#' class="delete"><i class="bi bi-trash"></i></a></td>
+  <td><a href="#" ><i class="bi bi-pencil edit" ></i></a></td>
+  <td><a href='#' ><i class="bi bi-trash delete" ></i></a></td>
   `;
 
     document.querySelector("#to-do-list").appendChild(row);
   }
 
-  static deleteTask() {}
+  static deleteTask(target) {
+    target.parentElement.parentElement.parentElement.remove();
+  }
 }
 
 // Create and add Task
@@ -46,5 +48,25 @@ document.querySelector("#submit").addEventListener("click", function () {
     document.querySelector("#task").value = "";
     document.querySelector("#notes").value = "";
     document.querySelector("#date").value = "";
+  }
+});
+
+// Delete Task
+document.querySelector("#to-do-list").addEventListener("click", function (e) {
+  if (e.target.classList.contains("delete")) {
+    UI.deleteTask(e.target);
+  }
+});
+
+document.querySelector("#to-do-list").addEventListener("click", function (e) {
+  if (e.target.classList.contains("edit")) {
+    const newTaskName = window.prompt("Edit Task Name");
+    const newNotesName = window.prompt("Edit Notes");
+
+    e.target.parentElement.parentElement.previousElementSibling.previousElementSibling.innerHTML =
+      newNotesName;
+
+    e.target.parentElement.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.innerHTML =
+      newTaskName;
   }
 });
